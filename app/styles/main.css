@@ -1,0 +1,26 @@
+/* Will be compiled down to a single stylesheet with your sass files */
+
+.pad {
+  padding: 10px;
+}
+
+/* wraps main columns */
+#main {}
+
+#jobs {}
+
+#browse {}
+
+.job {
+  padding: 10px;
+  background-color: #fafafa;
+  margin-bottom: 10px;
+  box-shadow: 0 0 1em #888;
+}
+
+.resource {
+  border: 1px solid #ddd;
+  padding: 10px;
+  background-color: #fafafa;
+  margin-bottom: 5px;
+}
