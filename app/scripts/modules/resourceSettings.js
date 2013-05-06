@@ -9,7 +9,7 @@
 angular.module('resourceSettings', [])
   .value('apiBaseUrl', 'http://ayamel.americancouncils.org/api/')
   .value('resourceSettings', {
-    types: ['video', 'audio', 'document', 'data'],
+    types: ['video', 'audio', 'image', 'document', 'data', 'collection'],
     categories: ['Politics', 'Culture', 'Sports']
   })
   .value('relationSettings', {

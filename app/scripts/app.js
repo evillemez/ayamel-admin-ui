@@ -36,7 +36,7 @@ angular.module('ayamelAdminApp', ['resourceSettings','ngResource'])
       });
   })
   .run(function() {
-    $('.tooltips').tooltip({
+    $('.tooltip').tooltip({
       placement: 'top',
       container: 'body'
     });

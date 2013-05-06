@@ -1,23 +1,27 @@
-<div class="container-fluid" id='browse' ng-controller='BrowseCtrl'>
+<div class="row-fluid" id='browse' ng-controller='BrowseCtrl'>
   <div class="navbar">
     <div class="navbar-inner">
       <div class='navbar-form'>
-        <label class='checkbox pull-left' ng-repeat='type in availableFilters'>
-          {{ type }} <input type="checkbox" ng-model='filters[$index]' ng-true-value='{{type}}' class='pull-right'>
+        <label class='checkbox inline' ng-repeat='type in availableFilters'>
+          <input type="checkbox" value='{{type}}' ng-model='filters[$index]' ng-true-value='{{type}}'> {{ type }}
         </label>
         <input type='text' class='span1 pull-right' size=3 ng-model='itemsPerPage' ng-init='itemsPerPage=20'>
       </div>
     </div>
   </div>
   <div class='pad'>
-    <div class='resource row' ng-repeat='resource in resources' ng-show='resources.length'>
-      <div class='span1'><i class='icon-file'></i></div>
-      <div class='span2'><a href='#/view/{{resource.id}}'>{{resource.title}}</a></div>
-      <div class='span7'><small>{{resource.description}}</small></div>
-      <div class='span2'>
-        <div class='btn-group'>
-          <a class='btn tooltips' href='#/modify/{{resource.id}}' data-toggle="tooltip" title="Edit this Resource"><i class='icon-edit'></i></a>
-          <a class='btn tooltips' ng-click='deleteResource(resource.id)' data-toggle="tooltip" title="Delete this Resource"><i class='icon-trash'></i></a>
+    <div class='resource row-fluid' ng-repeat='resource in resources' ng-show='resources.length'>
+      <div class='pad'>
+        <div class='span2'>
+          <span class="label label-info"><i class='icon-file icon-white'></i></span>
+          <a href='#/view/{{resource.id}}'>{{resource.title}}</a>
+        </div>
+        <div class='span8'><small>{{resource.description}}</small></div>
+        <div class='span2'>
+          <div class='btn-group'>
+            <a class='btn tooltip' href='#/modify/{{resource.id}}' data-toggle="tooltip" title="Edit this Resource"><i class='icon-edit'></i></a>
+            <a class='btn tooltip' ng-click='deleteResource(resource.id)' data-toggle="tooltip" title="Delete this Resource"><i class='icon-trash'></i></a>
+          </div>
         </div>
       </div>
     </div>
