@@ -2,6 +2,9 @@
 
 angular.module('ayamelAdminApp')
   .controller('JobsCtrl', function ($scope, jobManager, appSettings) {
+
+    jobManager.setScope($scope);
+
     $scope.getPendingJobs = function () {
       return jobManager.getPendingJobs();
     };
@@ -11,6 +14,8 @@ angular.module('ayamelAdminApp')
     };
   })
   .factory('jobManager', function() {
+
+    var $scope = null;
 
     var active = [
       {
@@ -22,6 +27,7 @@ angular.module('ayamelAdminApp')
         progress: 38
       }
     ];
+
     var pending = ['whatever3.mp4'];
 
     return {
@@ -45,6 +51,9 @@ angular.module('ayamelAdminApp')
       },
       getPendingJobs: function() {
         return pending;
+      },
+      setScope: function(scope) {
+        $scope = scope;
       }
     };
   })

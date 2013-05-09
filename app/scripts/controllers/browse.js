@@ -11,7 +11,7 @@ angular.module('ayamelAdminApp')
     $scope.filters = [];
 
     //get the resources on load
-    $http.get(appSettings.apiBaseUrl + '/resources').success(function(data, status, headers, config) {
+    $http.get(appSettings.apiEndpoint + '/resources').success(function(data, status, headers, config) {
       $scope.resources = data.resources;
     }).error(function(data, status, headers, config) {
       $scope.$emit('notification', { type: 'error', message: "(" + status + ") Could not get resources." });

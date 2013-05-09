@@ -2,6 +2,7 @@
 
 .pad {
   padding: 10px;
+  clear: both;
 }
 
 /* wraps main content area for all routes, including jobs */
@@ -27,4 +28,5 @@
   border: 1px solid #ddd;
   background-color: #fafafa;
   margin-bottom: 5px;
+  vertical-align: middle;
 }
