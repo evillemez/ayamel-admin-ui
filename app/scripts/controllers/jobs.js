@@ -1,16 +1,26 @@
 'use strict';
 
 angular.module('ayamelAdminApp')
-  .controller('JobsCtrl', function ($scope, jobManager, appSettings) {
+  .controller('JobsCtrl', function ($scope, uploadManager, appSettings) {
+
+    uploadManager.setScope($scope);
+
     $scope.getPendingJobs = function () {
-      return jobManager.getPendingJobs();
+      return uploadManager.getPendingJobs();
     };
 
     $scope.getActiveJobs = function() {
-      return jobManager.getActiveJobs();
+      return uploadManager.getActiveJobs();
     };
   })
-  .factory('jobManager', function() {
+  .factory('uploadManager', function(uploadManagerSettings) {
+    //TODO: also receive some storage service for recording
+    //current and pending jobs, load those when created
+
+    var $scope = null;
+
+    //these simple data structure arrays probably won't work, you'll
+    //probably need to key all jobs based on the resource.id
 
     var active = [
       {
@@ -22,6 +32,7 @@ angular.module('ayamelAdminApp')
         progress: 38
       }
     ];
+
     var pending = ['whatever3.mp4'];
 
     return {
@@ -45,6 +56,9 @@ angular.module('ayamelAdminApp')
       },
       getPendingJobs: function() {
         return pending;
+      },
+      setScope: function(scope) {
+        $scope = scope;
       }
     };
   })

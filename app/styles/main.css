@@ -2,14 +2,14 @@
 
 .pad {
   padding: 10px;
+  clear: both;
 }
 
-/* wraps main columns */
+/* wraps main content area for all routes, including jobs */
 #main {}
 
+/* wraps job right column */
 #jobs {}
-
-#browse {}
 
 .job {
   padding: 10px;
@@ -18,9 +18,15 @@
   box-shadow: 0 0 1em #888;
 }
 
+/* main route areas */
+#browse {}
+#modify {}
+#search {}
+#view {}
+
 .resource {
   border: 1px solid #ddd;
-  padding: 10px;
   background-color: #fafafa;
   margin-bottom: 5px;
+  vertical-align: middle;
 }

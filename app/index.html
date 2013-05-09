@@ -37,7 +37,8 @@
           <li><a href="#/create">Create</a></li>
         </ul>
         <div class='navbar-form'>
-          <input type="text" class="span3 pull-right" placeholder="API Key" ng-model='apiKey'>
+          <input type="text" class="span2 pull-right" placeholder="API Key" ng-model='settings.apiKey' tooltip='You must provide a valid API key.' tooltip-placement='bottom'>
+          <input type="text" class="span3 pull-right" placeholder="API Endpoint" ng-model='settings.apiEndpoint' tooltip='You can override the location of the API server if being hosted elsewhere.' tooltip-placement='bottom'>
         </div>
       </div>
     </div>
@@ -49,18 +50,18 @@
         <button type="button" class="close" ng-click='removeNotification()'>&times;</button>
         {{ notification.message }}
       </div>
-      <div ng-show='apiKey' id='main'>
+      <div ng-show='settings.apiKey' id='main'>
         <div class='row-fluid'>
           <div class='span9' id='content' ng-view></div>
           <div class='span3 well' id='jobs' ng-controller='JobsCtrl'>
             <div class='pad'>
-              <div class='job' ng-repeat='job in getActiveJobs()'>
+              <div class='job' ng-repeat='job in getActiveJobs()' popover="TODO: show overview of resource" popover-trigger="mouseenter" popover-placement="left">
                 <h6>{{ job.filename }}</h6>
                 <div class="progress progress-striped active">
                   <div class="bar" style="width: {{job.progress}}%;"></div>
                 </div>
               </div>
-              <div class='job' ng-repeat='file in getPendingJobs()'>
+              <div class='job' ng-repeat='file in getPendingJobs()' popover="TODO: show overview of resource" popover-trigger="mouseenter" popover-placement="left">
                 <h6>{{ file }}</h6>
                 <div class="progress">
                   <p>pending...</p>
@@ -70,7 +71,7 @@
           </div>
         </div>
       </div>
-      <div ng-show='!apiKey' class='alert alert-warning'>
+      <div ng-show='!settings.apiKey' class='alert alert-warning'>
         <h4>Note:</h4>
         <p>You must enter a valid API key above to use this application.</p>
       </div>
@@ -79,22 +80,23 @@
 
     <!-- TODO: footer -->
 
-    <script src="components/jquery/jquery.js"></script>
     <script src="components/angular/angular.js"></script>
     <script src="components/angular-resource/angular-resource.js"></script>
     <script src="components/angular-cookies/angular-cookies.js"></script>
     <script src="components/angular-sanitize/angular-sanitize.js"></script>
     <script src="components/angular-mocks/angular-mocks.js"></script>
-    <script src="components/bootstrap.css/js/bootstrap.js"></script>
+    <script src="components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
 
     <!-- build:js scripts/scripts.js -->
     <script src="scripts/app.js"></script>
-    <script src="scripts/controllers/main.js"></script>
+    <script src="scripts/controllers/search.js"></script>
     <script src="scripts/controllers/browse.js"></script>
+    <script src="scripts/controllers/view.js"></script>
     <script src="scripts/controllers/notifications.js"></script>
     <script src="scripts/controllers/jobs.js"></script>
+    <script src="scripts/controllers/modify.js"></script>
+    <script src="scripts/controllers/create.js"></script>
     <script src="scripts/modules/ayamelServerFake.js"></script>
-    <script src="scripts/modules/resourceSettings.js"></script>
     <!-- endbuild -->
 
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->

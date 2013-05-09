@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('ayamelAdminApp')
-  .controller('MainCtrl', function ($scope) {
+  .controller('SearchCtrl', function ($scope) {
   	//TODO: eventual search controller
   })
 ;
