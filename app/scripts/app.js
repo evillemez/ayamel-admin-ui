@@ -3,9 +3,13 @@
 //general settings for app behavior
 var settings = {
   app: {
-    apiEndpoint: 'http://ayamel.americancouncils.org/index_dev.php/api/v1/',
+    apiEndpoint: 'http://ayamel.americancouncils.org/index_dev.php/api/v1',
     notificationTimeout: 3000,
     apiKey: '2hsd834hdf'
+  },
+  uploadManager: {
+    maxFileSize: 200000000,  //~200MB
+    maxConcurrentUploads: 3
   },
   resource: {
     types: ['video', 'audio', 'image', 'document', 'data', 'collection'],
@@ -23,6 +27,7 @@ angular.module('ayamelAdminApp', ['ui.bootstrap', 'ngResource'])
   .value('resourceSettings', settings.resource)
   .value('relationSettings', settings.relation)
   .value('fileSettings', settings.file)
+  .value('uploadManagerSettings', settings.uploadManager)
   .config(function ($routeProvider) {
     $routeProvider
       .when('/', {
@@ -35,7 +40,7 @@ angular.module('ayamelAdminApp', ['ui.bootstrap', 'ngResource'])
       })
       .when('/create', {
         templateUrl: 'views/create.html',
-        controller: 'MainCtrl'
+        controller: 'CreateCtrl'
       })
       .when('/modify/:resourceId', {
         templateUrl: 'views/modify.html',
@@ -50,8 +55,11 @@ angular.module('ayamelAdminApp', ['ui.bootstrap', 'ngResource'])
       });
   })
   .run(function($rootScope, appSettings) {
-    $rootScope.apiEndpoint = appSettings.apiEndpoint;
-    $rootScope.apiKey = appSettings.apiKey;
+    $rootScope.settings = {
+      apiEndpoint: appSettings.apiEndpoint || false,
+      apiKey: appSettings.apiKey || false
+    };
+    
   })
 ;
 

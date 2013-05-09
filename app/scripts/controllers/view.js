@@ -2,7 +2,7 @@
 
 angular.module('ayamelAdminApp')
   .controller('ViewCtrl', function ($scope, $http, appSettings, resourceSettings, $location, $routeParams) {
-    if (!$scope.apiKey) {
+    if (!$scope.settings.apiKey) {
       $location.url('/');
     }
 
@@ -12,9 +12,9 @@ angular.module('ayamelAdminApp')
     $http.get(appSettings.apiEndpoint + '/resources/' + $routeParams.resourceId).success(function(data, status, headers, config) {
       $scope.resource = data.resource;
     }).error(function (data, status, headers, config) {
-      $scope.$emit('notification', { type: 'error', message: "(" + status + ") Could not get resource." });
+      var msg = "(" + status + ") " + data.response.message || "(" + status + ") Could not get resource.";
+      $scope.$emit('notification', { type: 'error', message:  msg });
     });
-
 
   })
  ;

@@ -2,13 +2,16 @@
   <div class="navbar">
     <div class="navbar-inner">
       <div class='navbar-form'>
-        <select>
-          <option>-- Filter: Type --</option>
+        <select class='input-medium'>
+          <option>-- Type --</option>
           <option ng-repeat='type in availableFilters' value='{{type}}'>{{type}}</option>
         </select>
-        <input type='text' class='span1 pull-right' size=3 ng-model='itemsPerPage' ng-init='itemsPerPage=20'>
+        <input type='text' class='span1 pull-right' size=3 ng-model='itemsPerPage' ng-init='itemsPerPage=20' tooltip='Number of items to show per page.' tooltip-placement='bottom'>
       </div>
     </div>
+  </div>
+  <div class='row pagination-centered'>
+    <pagination ng-show='!showPagination()' num-pages="5" current-page="currentPage" class="pagination-small" previous-text="&laquo;" next-text="&raquo;"></pagination>
   </div>
   <div class='pad'>
     <div class='resource row-fluid' ng-repeat='resource in resources' ng-show='resources.length'>
@@ -20,7 +23,7 @@
         <div class='span8'><small>{{resource.description}}</small></div>
         <div class='span2'>
           <div class='btn-group'>
-            <span class='btn btn-small' href='#/modify/{{resource.id}}' tooltip="Edit this Resource"><i class='icon-edit'></i></span>
+            <a class='btn btn-small' href='#/modify/{{resource.id}}' tooltip="Edit this Resource"><i class='icon-edit'></i></a>
             <a class='btn btn-small' tooltip="Delete this Resource" ng-click='deleteResource(resource.id)' title="Delete this Resource"><i class='icon-trash'></i></a>
           </div>
         </div>

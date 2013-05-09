@@ -2,7 +2,7 @@
 
 angular.module('ayamelAdminApp')
   .controller('ModifyCtrl', function ($scope, $http, appSettings, resourceSettings, $location, $routeParams) {
-    if (!$scope.apiKey) {
+    if (!$scope.settings.apiKey) {
       $location.url('/');
     }
 
