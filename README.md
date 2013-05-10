@@ -7,7 +7,6 @@ managing resources owned by a particular client.  This is mostly useful for clie
 ## TODO ##
 
 * browse view
-	* filter based on resource.type
 	* filter based on resource.status
 	* configurable # items per page
 	* show pagination if too many items

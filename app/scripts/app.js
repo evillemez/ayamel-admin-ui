@@ -59,7 +59,6 @@ angular.module('ayamelAdminApp', ['ui.bootstrap', 'ngResource'])
       apiEndpoint: appSettings.apiEndpoint || false,
       apiKey: appSettings.apiKey || false
     };
-    
   })
 ;
 

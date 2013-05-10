@@ -2,8 +2,8 @@
   <div class="navbar">
     <div class="navbar-inner">
       <div class='navbar-form'>
-        <select class='input-medium'>
-          <option>-- Type --</option>
+        <select class='input-medium' ng-model="filterSelected" ng-init="filterSelected == ''">
+          <option value=''>-- Type --</option>
           <option ng-repeat='type in availableFilters' value='{{type}}'>{{type}}</option>
         </select>
         <input type='text' class='span1 pull-right' size=3 ng-model='itemsPerPage' ng-init='itemsPerPage=20' tooltip='Number of items to show per page.' tooltip-placement='bottom'>
@@ -14,7 +14,7 @@
     <pagination ng-show='!showPagination()' num-pages="5" current-page="currentPage" class="pagination-small" previous-text="&laquo;" next-text="&raquo;"></pagination>
   </div>
   <div class='pad'>
-    <div class='resource row-fluid' ng-repeat='resource in resources' ng-show='resources.length'>
+    <div class='resource row-fluid' ng-repeat='resource in resources | filter: filterSelected' ng-show='resources.length'>
       <div class='pad'>
         <div class='span2'>
           <span class="label label-info"><i class='icon-file icon-white'></i></span>
