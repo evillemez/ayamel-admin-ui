@@ -30,3 +30,7 @@
   margin-bottom: 5px;
   vertical-align: middle;
 }
+
+.pagination > ul > li > a {
+  cursor: pointer;
+}
