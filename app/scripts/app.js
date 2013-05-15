@@ -13,7 +13,21 @@ var settings = {
   },
   resource: {
     types: ['video', 'audio', 'image', 'document', 'data', 'collection'],
-    categories: ['Politics', 'Culture', 'Sports']
+    categories: ['Politics', 'Culture', 'Sports'],
+    statuses: [
+      {
+        name: 'All',
+        value: ''
+      },
+      {
+        name: 'Awaiting Content',
+        value: 'awaiting_content'
+      },
+      {
+        name: 'Finished Uploading',
+        value: 'finished_uploading'
+      }
+    ]
   },
   relation: {
     types: ['part_of', 'depends_on', 'requires', 'search_include']

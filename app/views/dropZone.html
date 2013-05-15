@@ -1,0 +1,24 @@
+<form ng-hide='fileSubmit'>
+    <div>
+        <h1>Create Resource</h1>
+        <h3>Drop files here or click the file selector to begin</h3>
+    </div>
+    <input type="file" multiple ng-model="fileSet">
+    <table class='table table-bordered'>
+        <thead>
+            <tr>
+                <th>&#35;</th>
+                <th>File Name</th>
+                <th>File Size</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat='(fileIndex, file) in files' ng-class='tableRowClass(fileIndex)'>
+                <td>{{fileIndex + 1}}</td>
+                <td>{{file.name}}</td>
+                <td>{{file.size}}</td>
+            </tr>
+        </tbody>
+    </table>
+    <button class='btn btn-primary' id='fileSubmit' ng-click='fileSubmitter()' ng-disabled='submitDisabled'>Submit</button>
+</form>

@@ -34,3 +34,7 @@
 .pagination > ul > li > a {
   cursor: pointer;
 }
+
+#dropZone {
+  height: 100%;
+}

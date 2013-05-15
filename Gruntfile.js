@@ -15,7 +15,7 @@ module.exports = function (grunt) {
   };
 
   try {
-    yeomanConfig.app = require('./component.json').appPath || yeomanConfig.app;
+    yeomanConfig.app = require('./bower.json').appPath || yeomanConfig.app;
   } catch (e) {}
 
   grunt.initConfig({
@@ -98,15 +98,15 @@ module.exports = function (grunt) {
       },
       server: '.tmp'
     },
-    jshint: {
-      options: {
-        jshintrc: '.jshintrc'
-      },
-      all: [
-        'Gruntfile.js',
-        '<%= yeoman.app %>/scripts/{,*/}*.js'
-      ]
-    },
+    //jshint: {
+    //  options: {
+    //    jshintrc: '.jshintrc'
+    //  },
+    //  all: [
+    //    'Gruntfile.js',
+    //    '<%= yeoman.app %>/scripts/{,*/}*.js'
+    //  ]
+    //},
     karma: {
       unit: {
         configFile: 'karma.conf.js',
@@ -291,7 +291,7 @@ module.exports = function (grunt) {
 
   grunt.registerTask('build', [
     'clean:dist',
-    'jshint',
+    //'jshint',
     //'test',
     'coffee',
     //'compass:dist',

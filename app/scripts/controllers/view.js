@@ -16,5 +16,4 @@ angular.module('ayamelAdminApp')
       $scope.$emit('notification', { type: 'error', message:  msg });
     });
 
-  })
- ;
+  });

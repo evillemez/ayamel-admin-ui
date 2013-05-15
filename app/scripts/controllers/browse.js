@@ -7,6 +7,8 @@ angular.module('ayamelAdminApp')
     }
 
     $scope.availableFilters = resourceSettings.types;
+    $scope.availableStatuses = resourceSettings.statuses;
+    $scope.filterSelected = {};
     $scope.resources = [];
     $scope.filters = [];
     $scope.currentPage = 3;
@@ -24,7 +26,7 @@ angular.module('ayamelAdminApp')
     };
 
     $scope.getNumPages = function() {
-      return Math.ceil($scope.itemsPerPage / $scope.resources.length);
+      return Math.ceil($scope.resources.length / $scope.itemsPerPage);
     };
 
     $scope.setPage = function(num) {
