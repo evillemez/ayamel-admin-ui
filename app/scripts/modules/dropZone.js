@@ -1,5 +1,5 @@
 angular.module('ayamelAdminApp')
-    .directive('dropZone', function () {
+    .directive('dropZone', function (uploadManager) {
         var dropZone = {
             restrict: 'A',
             templateUrl: '../views/dropZone.html',
@@ -43,9 +43,9 @@ angular.module('ayamelAdminApp')
                 });
 
                 elem.children().children('button').on('click', function (e) {
-                    var data = new FormData();
+                    var data = new FormData(), i;
 
-                    for (var i = 0; i < scope.files.length; i++) {
+                    for (i = 0; i < scope.files.length; i++) {
                         data.append('file-' + i, scope.files[i].file);
                     }
 
@@ -76,6 +76,9 @@ angular.module('ayamelAdminApp')
                         }*/
                     });
 
+                    for (i = 0; i < scope.files.length; i++) {
+                        uploadManager.scheduleJob(scope.files[i].name);
+                    }
 
                     scope.fileSubmit = true
                     scope.$apply();
