@@ -82,7 +82,6 @@ angular.module('ayamelAdminApp')
                             uploadManager.scheduleJob(scope.files[index]);
                         })
                         .error(function (error) {
-                            console.log(error.response.message);
                             scope.$emit('notification', error.response.message);
                         });
                 };
