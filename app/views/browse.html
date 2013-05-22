@@ -18,7 +18,7 @@
     <pagination ng-show='showPagination()' num-pages="getNumPages()" current-page="currentPage" class="pagination-small" previous-text="&laquo;" next-text="&raquo;"></pagination>
   </div>
   <div class='pad'>
-    <div class='resource row-fluid' ng-repeat='resource in resources | filter: filterSelected.type' ng-show='resources.length'>
+    <div class='resource row-fluid' ng-repeat='(resourceIndex, resource) in resources | filter: filterSelected.type' ng-show='resources.length'>
       <div class='pad'>
         <div class='span2'>
           <span class="label label-info"><i class='icon-file icon-white'></i></span>
@@ -28,13 +28,27 @@
         <div class='span2'>
           <div class='btn-group'>
             <a class='btn btn-small' href='#/modify/{{resource.id}}' tooltip="Edit this Resource"><i class='icon-edit'></i></a>
-            <a class='btn btn-small' tooltip="Delete this Resource" ng-click='deleteResource(resource.id)' title="Delete this Resource"><i class='icon-trash'></i></a>
+            <a class='btn btn-small' tooltip="Delete this Resource" ng-click='openModal(resourceIndex)' title="Delete this Resource"><i class='icon-trash'></i></a>
           </div>
         </div>
       </div>
     </div>
     <div ng-show='!resources.length'>
       <p>There are no resources to view.</p>
+    </div>
+  </div>
+  <div modal="modalOpen" close="closeModal()">
+    <div class="modal-header">
+      <h4>{{resourceDel.title}}</h4>
+    </div>
+    <div class="modal-body">
+      <p>
+        Do you really want to delete this item?
+      </p>
+    </div>
+    <div class="modal-footer">
+      <button class='btn btn-primary' ng-click="closeModal()">No</button>
+      <button class='btn btn-primary' ng-click='deleteResource(resourceDel.id)'>Yes</button>
     </div>
   </div>
 </div>

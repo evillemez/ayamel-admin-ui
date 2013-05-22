@@ -14,6 +14,8 @@ angular.module('ayamelAdminApp')
     $scope.currentPage = 3;
     $scope.pages = 4;
 
+    $scope.modalOpen = false;
+
     //get the resources on load
     $scope.requestResources = function () {
       $http.get(appSettings.apiEndpoint + '/resources').success(function (data, status, headers, config) {
@@ -37,6 +39,16 @@ angular.module('ayamelAdminApp')
       $scope.currentPage = num;
     };
 
+    $scope.openModal = function (index) {
+      $scope.modalOpen = true;
+      $scope.resourceDel = $scope.resources[index];
+    };
+
+    $scope.closeModal = function () {
+      $scope.modalOpen = false;
+      $scope.resourceDel = undefined;
+    };
+
     $scope.deleteResource = function (id) {
       // Need to fix url
       $http.delete(appSettings.apiEndpoint + '/resources/' + id).success(function (data, status, headers, config) {
@@ -45,5 +57,7 @@ angular.module('ayamelAdminApp')
       }).error(function (data, status, headers, config) {
         $scope.$emit('notification', { type: 'error', message: "(" + status + ") Could not delete resource." });
       });
+
+      $scope.closeModal();
     };
   });

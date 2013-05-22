@@ -108,9 +108,6 @@ angular.module('ayamelServerFake', ['ngMockE2E'])
     function getResourceIdFromPath(path, url) {
       //this would be much nicer w/ regex
       var parts = url.replace(appSettings.apiEndpoint + "/resources", "").split("/");
-      if (parts.length != 3) {
-          return false;
-      }
 
       return parts[1];
     }
