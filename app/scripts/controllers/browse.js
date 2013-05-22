@@ -15,22 +15,35 @@ angular.module('ayamelAdminApp')
     $scope.pages = 4;
 
     //get the resources on load
-    $http.get(appSettings.apiEndpoint + '/resources').success(function(data, status, headers, config) {
-      $scope.resources = data.resources;
-    }).error(function(data, status, headers, config) {
-      $scope.$emit('notification', { type: 'error', message: "(" + status + ") Could not get resources." });
-    });
+    $scope.requestResources = function () {
+      $http.get(appSettings.apiEndpoint + '/resources').success(function (data, status, headers, config) {
+        $scope.resources = data.resources;
+      }).error(function (data, status, headers, config) {
+        $scope.$emit('notification', { type: 'error', message: "(" + status + ") Could not get resources." });
+      });
+    };
 
-    $scope.showPagination = function() {
+    $scope.requestResources();
+
+    $scope.showPagination = function () {
       return $scope.resources.length > $scope.itemsPerPage;
     };
 
-    $scope.getNumPages = function() {
+    $scope.getNumPages = function () {
       return Math.ceil($scope.resources.length / $scope.itemsPerPage);
     };
 
-    $scope.setPage = function(num) {
+    $scope.setPage = function (num) {
       $scope.currentPage = num;
     };
-  })
- ;
+
+    $scope.deleteResource = function (id) {
+      // Need to fix url
+      $http.delete(appSettings.apiEndpoint + '/resources/' + id).success(function (data, status, headers, config) {
+        // Refresh resources
+        $scope.requestResources();
+      }).error(function (data, status, headers, config) {
+        $scope.$emit('notification', { type: 'error', message: "(" + status + ") Could not delete resource." });
+      });
+    };
+  });

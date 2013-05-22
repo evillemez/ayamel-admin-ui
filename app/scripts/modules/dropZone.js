@@ -1,29 +1,33 @@
 angular.module('ayamelAdminApp')
-    .directive('dropZone', function (uploadManager) {
+    .directive('dropZone', function ($http, uploadManager, resourceSettings) {
         var dropZone = {
             restrict: 'A',
             templateUrl: '../views/dropZone.html',
             scope: false,
             link: function (scope, elem, attr) {
                 angular.element.event.props.push('dataTransfer'); // jQuery hack, as noted in the jQuery API documentation
+
+                scope.categories = resourceSettings.categories;
+                
                 elem.on('dragover', function (e) {
                     e.preventDefault();
                 }).on('drop', function (e) {
                     e.preventDefault();
 
-                    scope.fileDrop = e.dataTransfer.files;
+                    scope.$apply(function () {
+                        scope.files = [];
+                        scope.fileDrop = e.dataTransfer.files;
 
-                    for (var i = 0; i < scope.fileDrop.length; i++) {
-                        scope.files.push({
-                            name: scope.fileDrop[i].name,
-                            size: scope.fileDrop[i].size + ' bytes',
-                            file: scope.fileDrop[i]
-                        });
-                    }
+                        for (var i = 0; i < scope.fileDrop.length; i++) {
+                            scope.files.push({
+                                name: scope.fileDrop[i].name,
+                                size: scope.fileDrop[i].size + ' bytes',
+                                file: scope.fileDrop[i]
+                            });
+                        }
 
-                    scope.submitDisabled = false;
-
-                    scope.$apply();
+                        scope.submitDisabled = false;
+                    });
                 });
 
                 elem.children().children('input[type="file"]').on('change', function (e) {
@@ -42,24 +46,61 @@ angular.module('ayamelAdminApp')
                     scope.$apply();
                 });
 
-                elem.children().children('button').on('click', function (e) {
-                    var data = new FormData(), i;
+                scope.fileSubmit = function (index) {
+                    var data = {};
 
-                    for (i = 0; i < scope.files.length; i++) {
-                        data.append('file-' + i, scope.files[i].file);
-                    }
+                    data.name = scope.files[index].name;
+                    data.size = scope.files[index].size;
+                    data.description = scope.files[index].description;
+                    data.categories = scope.files[index].categories;
+                    data.keywords = scope.files[index].keywords;
+                    data.license = scope.files[index].license;
+                    data.copyright = scope.files[index].copyright;
+                    data.visibility = scope.files[index].visibility;
+                    data.origin = {};
+                    data.origin.creator = scope.files[index].origin.creator;
+                    data.origin.location = scope.files[index].origin.location;
+                    data.origin.date = scope.files[index].origin.data;
+                    data.origin.format = scope.files[index].origin.format;
+                    data.origin.note = scope.files[index].origin.note;
+                    data.origin.uri = scope.files[index].origin.uri;
+
+                    $http.post(appSettings.apiEndpoint + '/resources', data)
+                        .success(function (dataReceived) {
+                            scope.requestUploadUrl(index, dataReceived.id);
+                        })
+                        .error(function (error) {
+                            scope.$emit('notification', error);
+                        });
+                };
+
+                scope.requestUploadUrl = function (index, id) {
+                    $http.get(appSettings.apiEndpoint + '/resources/' + id + '/request-upload-url')
+                        .success(function (data) {
+                            scope.fileUpload(index, id, data);
+                        })
+                        .error(function (error) {
+                            scope.$emit('notification', error);
+                        });
+                };
+
+                scope.fileUpload = function (index, id, data) {
+                    var data = new FormData();
+
+                    data.append('file' + index, scope.files[index].file);
+
+                    uploadManager.scheduleJob(scope.files[index].name);
 
                     angular.element.ajax({
-                        url: '', // insert url here
+                        url: appSettings.apiEndpoint + '/resources/' + id + '/content/' + data.token, // url likely incorrect
                         type: 'POST',
                         data: data,
                         contentType: false,
                         processData: false,
                         error: function (e, error) {
                             // TODO: error message
-                            console.log('Error has occured');
-                            scope.$emit('notification', 'Error');
-                        }/*,
+                            scope.$emit('notification', error);
+                        },
                         xhr: function () {
                             var xhr = angular.element.ajaxSettings.xhr();
 
@@ -73,16 +114,9 @@ angular.module('ayamelAdminApp')
                             }
 
                             return xhr;
-                        }*/
+                        }
                     });
-
-                    for (i = 0; i < scope.files.length; i++) {
-                        uploadManager.scheduleJob(scope.files[i].name);
-                    }
-
-                    scope.fileSubmit = true
-                    scope.$apply();
-                });
+                };
             }
         };
 

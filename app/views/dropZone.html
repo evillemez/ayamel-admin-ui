@@ -1,24 +1,106 @@
-<form ng-hide='fileSubmit'>
-    <div>
-        <h1>Create Resource</h1>
-        <h3>Drop files here or click the file selector to begin</h3>
+<form>
+  <div>
+    <h1>Create Resource</h1>
+    <h3>Drop files here or click the file selector to begin</h3>
+  </div>
+  <input type="file" multiple ng-model="fileSet">
+</form>
+<form class='form-horizontal' ng-repeat='(fileIndex, file) in files'>
+  <h4>{{fileIndex + 1}}.  {{file.name}}</h4>
+  <div class='control-group'>
+    <label class='control-label' for='title{{fileIndex}}'>Title</label>
+    <div class='controls'>
+      <input type='text' id='title{{fileIndex}}' ng-model='file.title' placeholder='{{file.name}}'>
     </div>
-    <input type="file" multiple ng-model="fileSet">
-    <table class='table table-bordered'>
-        <thead>
-            <tr>
-                <th>&#35;</th>
-                <th>File Name</th>
-                <th>File Size</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr ng-repeat='(fileIndex, file) in files' ng-class='tableRowClass(fileIndex)'>
-                <td>{{fileIndex + 1}}</td>
-                <td>{{file.name}}</td>
-                <td>{{file.size}}</td>
-            </tr>
-        </tbody>
-    </table>
-    <button class='btn btn-primary' id='fileSubmit' ng-click='fileSubmitter()' ng-disabled='submitDisabled'>Submit</button>
+  </div>
+  <div class='control-group'>
+    <label class='control-label' for='type{{fileIndex}}'>Type</label>
+    <div class='controls'>
+      <input type='text' id='type{{fileIndex}}' ng-model='file.type'>
+    </div>
+  </div>
+  <div class='control-group'>
+    <label class='control-label' for='size{{fileIndex}}'>File Size</label>
+    <div class='controls'>
+      <input disabled type='text' id='size{{fileIndex}}' ng-model='file.size'>
+    </div>
+  </div>
+  <div class='control-group'>
+    <label class='control-label' for='description{{fileIndex}}'>Description</label>
+    <div class='controls'>
+      <textarea id='description{{fileIndex}}' ng-model='file.description'></textarea>
+    </div>
+  </div>
+  <div class='control-group'>
+    <label class='control-label' for='categories{{fileIndex}}'>Categories</label>
+    <div class='controls'>
+      <select multiple id='categories{{fileIndex}}' ng-model='file.categories' ng-options="category for category in categories">
+      </select>
+    </div>
+  </div>
+  <div class='control-group'>
+    <label class='control-label' for='keywords{{fileIndex}}'>Keywords</label>
+    <div class='controls'>
+      <input type='text' id='keywords{{fileIndex}}' ng-model='file.keywords'>
+    </div>
+  </div>
+  <div class='control-group'>
+    <label class='control-label' for='license{{fileIndex}}'>License</label>
+    <div class='controls'>
+      <input type='text' id='license{{fileIndex}}' ng-model='file.license' placeholder='Creative Commons'>
+    </div>
+  </div>
+  <div class='control-group'>
+    <label class='control-label' for='copyright{{fileIndex}}'>Copyright</label>
+    <div class='controls'>
+      <input type='text' id='copyright{{fileIndex}}' ng-model='file.copyright'>
+    </div>
+  </div>
+  <div class='control-group'>
+    <label class='control-label' for='visibility{{fileIndex}}'>Visibility</label>
+    <div class='controls'>
+      <input type='text' id='visibility{{fileIndex}}' ng-model='file.visibility'>
+    </div>
+  </div>
+  <div class='control-group'>
+    <label class='control-label' for='creator{{fileIndex}}'>Creator</label>
+    <div class='controls'>
+      <input type='text' id='creator{{fileIndex}}' ng-model='file.origin.creator'>
+    </div>
+  </div>
+  <div class='control-group'>
+    <label class='control-label' for='location{{fileIndex}}'>Location</label>
+    <div class='controls'>
+      <input type='text' id='location{{fileIndex}}' ng-model='file.origin.location'>
+    </div>
+  </div>
+  <div class='control-group'>
+    <label class='control-label' for='date{{fileIndex}}'>Date</label>
+    <div class='controls'>
+      <input type='text' id='date{{fileIndex}}' ng-model='file.origin.date'>
+    </div>
+  </div>
+  <div class='control-group'>
+    <label class='control-label' for='format{{fileIndex}}'>Format</label>
+    <div class='controls'>
+      <input type='text' id='format{{fileIndex}}' ng-model='file.origin.format'>
+    </div>
+  </div>
+  <div class='control-group'>
+    <label class='control-label' for='note{{fileIndex}}'>Note</label>
+    <div class='controls'>
+      <textarea id='title{{fileIndex}}' ng-model='file.origin.note'></textarea>
+    </div>
+  </div>
+  <div class='control-group'>
+    <label class='control-label' for='uri{{fileIndex}}'>URI</label>
+    <div class='controls'>
+      <input type='text' id='uri{{fileIndex}}' ng-model='file.origin.uri'>
+    </div>
+  </div>
+  <div class='control-group'>
+    <div class='controls'>
+      <button class='btn btn-primary' ng-click="fileSubmit(fileIndex)">Submit</button>
+    </div>
+  </div>
 </form>

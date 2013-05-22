@@ -13,7 +13,7 @@ var settings = {
   },
   resource: {
     types: ['video', 'audio', 'image', 'document', 'data', 'collection'],
-    categories: ['Politics', 'Culture', 'Sports'],
+    categories: ['Food', 'Politics', 'Culture', 'Sports'],
     statuses: [
       {
         name: 'All',

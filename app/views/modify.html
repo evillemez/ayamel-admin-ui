@@ -1,3 +1,95 @@
 <div id='modify' ng-controller='ModifyCtrl'>
-  <p>Modifying {{resource.id}}</p>
+  <form class='form-horizontal'>
+      <h4>Modifying {{resource.title}}</h4>
+      <div class='control-group'>
+        <label class='control-label' for='title'>Title</label>
+        <div class='controls'>
+          <input type='text' id='title' ng-model='resource.title'>
+        </div>
+      </div>
+      <div class='control-group'>
+        <label class='control-label' for='type'>Type</label>
+        <div class='controls'>
+          <input type='text' id='type' ng-model='resource.type'>
+        </div>
+      </div>
+      <div class='control-group'>
+        <label class='control-label' for='description'>Description</label>
+        <div class='controls'>
+          <textarea id='description' ng-model='resource.description'></textarea>
+        </div>
+      </div>
+      <div class='control-group'>
+        <label class='control-label' for='categories'>Categories</label>
+        <div class='controls'>
+          <select multiple id='categories' ng-model='resource.categories' ng-options="category for category in categories">
+          </select>
+        </div>
+      </div>
+      <div class='control-group'>
+        <label class='control-label' for='keywords'>Keywords</label>
+        <div class='controls'>
+          <input type='text' id='keywords' ng-model='resource.keywords'>
+        </div>
+      </div>
+      <div class='control-group'>
+        <label class='control-label' for='license'>License</label>
+        <div class='controls'>
+          <input type='text' id='license' ng-model='resource.license' placeholder='Creative Commons'>
+        </div>
+      </div>
+      <div class='control-group'>
+        <label class='control-label' for='copyright'>Copyright</label>
+        <div class='controls'>
+          <input type='text' id='copyright' ng-model='resource.copyright'>
+        </div>
+      </div>
+      <div class='control-group'>
+        <label class='control-label' for='visibility'>Visibility</label>
+        <div class='controls'>
+          <input type='text' id='visibility' ng-model='resource.visibility'>
+        </div>
+      </div>
+      <div class='control-group'>
+        <label class='control-label' for='creator'>Creator</label>
+        <div class='controls'>
+          <input type='text' id='creator' ng-model='resource.origin.creator'>
+        </div>
+      </div>
+      <div class='control-group'>
+        <label class='control-label' for='location'>Location</label>
+        <div class='controls'>
+          <input type='text' id='location' ng-model='resource.origin.location'>
+        </div>
+      </div>
+      <div class='control-group'>
+        <label class='control-label' for='date'>Date</label>
+        <div class='controls'>
+          <input type='text' id='date' ng-model='resource.origin.date'>
+        </div>
+      </div>
+      <div class='control-group'>
+        <label class='control-label' for='format'>Format</label>
+        <div class='controls'>
+          <input type='text' id='format' ng-model='resource.origin.format'>
+        </div>
+      </div>
+      <div class='control-group'>
+        <label class='control-label' for='note'>Note</label>
+        <div class='controls'>
+          <textarea id='title' ng-model='resource.origin.note'></textarea>
+        </div>
+      </div>
+      <div class='control-group'>
+        <label class='control-label' for='uri'>URI</label>
+        <div class='controls'>
+          <input type='text' id='uri' ng-model='resource.origin.uri'>
+        </div>
+      </div>
+      <div class='control-group'>
+        <div class='controls'>
+          <button class='btn btn-primary' ng-click="resourceSubmit()">Submit</button>
+        </div>
+      </div>
+    </form>
 </div>
