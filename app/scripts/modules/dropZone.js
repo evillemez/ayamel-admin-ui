@@ -67,7 +67,7 @@ angular.module('ayamelAdminApp')
 
                     $http.post(appSettings.apiEndpoint + '/resources', data)
                         .success(function (dataReceived) {
-                            scope.requestUploadUrl(index, dataReceived.id);
+                            scope.requestUploadUrl(index, dataReceived.resource.id);
                         })
                         .error(function (error) {
                             scope.$emit('notification', error.response.message);
@@ -78,10 +78,11 @@ angular.module('ayamelAdminApp')
                     $http.get(appSettings.apiEndpoint + '/resources/' + id + '/request-upload-url')
                         .success(function (data) {
                             scope.files[index].id = id;
-                            scope.files[index].token = data;
+                            scope.files[index].token = data.content_upload_url;
                             uploadManager.scheduleJob(scope.files[index]);
                         })
                         .error(function (error) {
+                            console.log(error.response.message);
                             scope.$emit('notification', error.response.message);
                         });
                 };

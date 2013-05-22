@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('ayamelAdminApp')
-  .controller('JobsCtrl', function ($scope, uploadManager, appSettings) {
+  .controller('JobsCtrl', function ($scope, uploadManager) {
 
     uploadManager.setScope($scope);
 
@@ -9,11 +9,15 @@ angular.module('ayamelAdminApp')
       return uploadManager.getPendingJobs();
     };
 
-    $scope.getActiveJobs = function() {
+    $scope.getActiveJobs = function () {
       return uploadManager.getActiveJobs();
     };
+
+    $scope.startNextJob = function () {
+      uploadManager.startNext();
+    }
   })
-  .factory('uploadManager', function(uploadManagerSettings) {
+  .factory('uploadManager', function(uploadManagerSettings, appSettings, $timeout) {
     //TODO: also receive some storage service for recording
     //current and pending jobs, load those when created
 
@@ -40,11 +44,12 @@ angular.module('ayamelAdminApp')
     var updateProgress = function (e, id) {
       for (var i = 0; i < active.length; i++) {
         if (active[i].id === id) {
-          angular.element('.job:nth-child(' + i + ') .bar').width(e.loaded / e.max);
+          active.progress = e.loaded / e.max * 100;
+          angular.element('.job:nth-child(' + (i + 1) + ') .bar').width(active.progress + '%');
           break;
         }
       }
-    }
+    };
 
     return {
       startNext: function() {
@@ -62,7 +67,20 @@ angular.module('ayamelAdminApp')
             progress: 0
           });
 
-          angular.element.ajax({
+          for (var i = 0; i < 4; i++) {
+            $timeout(function () {
+              updateProgress(
+                {
+                  loaded: i * 25,
+                  max: 100
+                },
+                file.id
+              );
+            }, 1000 * (2 * i + 1));
+          }
+
+          // File upload
+          /*angular.element.ajax({
               url: appSettings.apiEndpoint + '/resources/' + file.id + '/content/' + file.token, // url likely incorrect
               type: 'POST',
               data: formData,
@@ -87,7 +105,7 @@ angular.module('ayamelAdminApp')
 
                   return xhr;
               }
-          });
+          });*/
         }
       },
       scheduleJob: function(file) {

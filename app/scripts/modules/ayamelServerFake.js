@@ -108,7 +108,7 @@ angular.module('ayamelServerFake', ['ngMockE2E'])
     function getResourceIdFromPath(path, url) {
       //this would be much nicer w/ regex
       var parts = url.replace(appSettings.apiEndpoint + "/resources", "").split("/");
-      if (parts.length != 2) {
+      if (parts.length != 3) {
           return false;
       }
 
@@ -201,7 +201,7 @@ angular.module('ayamelServerFake', ['ngMockE2E'])
 
       var uploadUrl = appSettings.apiEndpoint + '/resources/' + resource.id + '/content/h543dfakkdshf56789';
 
-      return [201, { response: responseOk, resource: resource , contentUploadUrl: uploadUrl }];
+      return [201, { response: responseOk, resource: resource , content_upload_url: uploadUrl }];
     });
 
     //to get a content upload url for a resource
@@ -215,9 +215,9 @@ angular.module('ayamelServerFake', ['ngMockE2E'])
         return [404, { response: responseNotFound }];
       }
 
-      var uploadUrl = apiEndpoint + '/resources/' + resource.id + '/content/hashfadshf56789'
+      var uploadUrl = appSettings.apiEndpoint + '/resources/' + resource.id + '/content/hashfadshf56789'
       
-      return [200, { response: responseOk, contentUploadUrl: uploadUrl }];
+      return [200, { response: responseOk, content_upload_url: uploadUrl }];
     });
 
     //to upload actual content

@@ -62,11 +62,12 @@
                 </div>
               </div>
               <div class='job' ng-repeat='file in getPendingJobs()' popover="TODO: show overview of resource" popover-trigger="mouseenter" popover-placement="left">
-                <h6>{{ file }}</h6>
+                <h6>{{ file.name }}</h6>
                 <div class="progress">
                   <p>pending...</p>
                 </div>
               </div>
+              <button ng-click="startNextJob()" ng-disabled="!getPendingJobs()">Start next job</button>
             </div>
           </div>
         </div>
