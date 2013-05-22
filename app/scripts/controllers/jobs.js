@@ -24,27 +24,69 @@ angular.module('ayamelAdminApp')
 
     var active = [
       {
+        id: 2394021,
         filename: 'whatever.mp4',
         progress: 75
       },
       {
+        id: 2935092,
         filename: 'whatever2.mp4',
         progress: 38
       }
     ];
 
-    var pending = ['whatever3.mp4'];
+    var pending = [];
+
+    var updateProgress = function (e, id) {
+      for (var i = 0; i < active.length; i++) {
+        if (active[i].id === id) {
+          angular.element('.job:nth-child(' + i + ') .bar').width(e.loaded / e.max);
+          break;
+        }
+      }
+    }
 
     return {
       startNext: function() {
         if (pending.length) {
-          var filename = pending.shift();
+          var file = pending.shift();
 
           //TODO: xhr upload to api
+          var formData = new FormData();
+
+          formData.append('file', file.file);
 
           active.push({
-            file: filename,
+            id: file.id,
+            filename: file.name,
             progress: 0
+          });
+
+          angular.element.ajax({
+              url: appSettings.apiEndpoint + '/resources/' + file.id + '/content/' + file.token, // url likely incorrect
+              type: 'POST',
+              data: formData,
+              contentType: false,
+              processData: false,
+              error: function (e, error) {
+                  // TODO: error message
+                  scope.$emit('notification', error);
+              },
+              xhr: function () {
+                  var xhr = angular.element.ajaxSettings.xhr();
+
+                  if (xhr.upload) {
+                      xhr.upload.addEventListener('progress', function (e) {
+                          if (e.lengthComputable) {
+                              // TODO: add progress visually
+                              // percent progress = e.loaded / e.max
+                              updateProgress(e, file.id);
+                          }
+                      }, false);
+                  }
+
+                  return xhr;
+              }
           });
         }
       },

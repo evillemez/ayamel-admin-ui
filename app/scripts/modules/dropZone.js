@@ -1,5 +1,5 @@
 angular.module('ayamelAdminApp')
-    .directive('dropZone', function ($http, uploadManager, resourceSettings) {
+    .directive('dropZone', function ($http, uploadManager, appSettings, resourceSettings) {
         var dropZone = {
             restrict: 'A',
             templateUrl: '../views/dropZone.html',
@@ -8,7 +8,7 @@ angular.module('ayamelAdminApp')
                 angular.element.event.props.push('dataTransfer'); // jQuery hack, as noted in the jQuery API documentation
 
                 scope.categories = resourceSettings.categories;
-                
+
                 elem.on('dragover', function (e) {
                     e.preventDefault();
                 }).on('drop', function (e) {
@@ -70,52 +70,20 @@ angular.module('ayamelAdminApp')
                             scope.requestUploadUrl(index, dataReceived.id);
                         })
                         .error(function (error) {
-                            scope.$emit('notification', error);
+                            scope.$emit('notification', error.response.message);
                         });
                 };
 
                 scope.requestUploadUrl = function (index, id) {
                     $http.get(appSettings.apiEndpoint + '/resources/' + id + '/request-upload-url')
                         .success(function (data) {
-                            scope.fileUpload(index, id, data);
+                            scope.files[index].id = id;
+                            scope.files[index].token = data;
+                            uploadManager.scheduleJob(scope.files[index]);
                         })
                         .error(function (error) {
-                            scope.$emit('notification', error);
+                            scope.$emit('notification', error.response.message);
                         });
-                };
-
-                scope.fileUpload = function (index, id, data) {
-                    var data = new FormData();
-
-                    data.append('file' + index, scope.files[index].file);
-
-                    uploadManager.scheduleJob(scope.files[index].name);
-
-                    angular.element.ajax({
-                        url: appSettings.apiEndpoint + '/resources/' + id + '/content/' + data.token, // url likely incorrect
-                        type: 'POST',
-                        data: data,
-                        contentType: false,
-                        processData: false,
-                        error: function (e, error) {
-                            // TODO: error message
-                            scope.$emit('notification', error);
-                        },
-                        xhr: function () {
-                            var xhr = angular.element.ajaxSettings.xhr();
-
-                            if (xhr.upload) {
-                                xhr.upload.addEventListener('progress', function (e) {
-                                    if (e.lengthComputable) {
-                                        // TODO: add progress visually
-                                        // percent progress = e.loaded / e.max
-                                    }
-                                }, false);
-                            }
-
-                            return xhr;
-                        }
-                    });
                 };
             }
         };

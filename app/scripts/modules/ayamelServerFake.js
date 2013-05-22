@@ -199,7 +199,7 @@ angular.module('ayamelServerFake', ['ngMockE2E'])
 
       resources.push(resource);
 
-      var uploadUrl = apiEndpoint + '/resources/' + resource.id + '/content/h543dfakkdshf56789';
+      var uploadUrl = appSettings.apiEndpoint + '/resources/' + resource.id + '/content/h543dfakkdshf56789';
 
       return [201, { response: responseOk, resource: resource , contentUploadUrl: uploadUrl }];
     });
