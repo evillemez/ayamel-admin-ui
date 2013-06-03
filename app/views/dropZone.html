@@ -5,7 +5,7 @@
   </div>
   <input type="file" multiple ng-model="fileSet">
 </form>
-<form class='form-horizontal' ng-repeat='(fileIndex, file) in files'>
+<form class='form-horizontal' ng-repeat='(fileIndex, file) in files' ng-show='!file.id'>
   <h4>{{fileIndex + 1}}.  {{file.name}}</h4>
   <div class='control-group'>
     <label class='control-label' for='title{{fileIndex}}'>Title</label>
@@ -16,7 +16,7 @@
   <div class='control-group'>
     <label class='control-label' for='type{{fileIndex}}'>Type</label>
     <div class='controls'>
-      <input type='text' id='type{{fileIndex}}' ng-model='file.type'>
+      <select id='type{{fileIndex}}' ng-model='file.type' ng-options='type for type in resourceTypes'></select>
     </div>
   </div>
   <div class='control-group'>

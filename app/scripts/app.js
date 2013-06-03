@@ -3,7 +3,7 @@
 //general settings for app behavior
 var settings = {
   app: {
-    apiEndpoint: 'http://ayamel.americancouncils.org/index_dev.php/api/v1',
+    apiEndpoint: 'http://ayamel.americancouncils.org/api/v1',
     notificationTimeout: 3000,
     apiKey: '2hsd834hdf'
   },

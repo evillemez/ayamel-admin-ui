@@ -2,12 +2,13 @@ angular.module('ayamelAdminApp')
     .directive('dropZone', function ($http, uploadManager, appSettings, resourceSettings) {
         var dropZone = {
             restrict: 'A',
-            templateUrl: '../views/dropZone.html',
+            templateUrl: 'views/dropZone.html',
             scope: false,
             link: function (scope, elem, attr) {
                 angular.element.event.props.push('dataTransfer'); // jQuery hack, as noted in the jQuery API documentation
 
                 scope.categories = resourceSettings.categories;
+                scope.resourceTypes = resourceSettings.types;
 
                 elem.on('dragover', function (e) {
                     e.preventDefault();
@@ -70,20 +71,20 @@ angular.module('ayamelAdminApp')
                             scope.requestUploadUrl(index, dataReceived.resource.id);
                         })
                         .error(function (error) {
-                            scope.$emit('notification', error.response.message);
+                            scope.$emit('notification', {type: 'error', message: error.response.message});
                         });
                 };
 
                 scope.requestUploadUrl = function (index, id) {
-                    $http.get(appSettings.apiEndpoint + '/resources/' + id + '/request-upload-url')
-                        .success(function (data) {
-                            scope.files[index].id = id;
-                            scope.files[index].token = data.content_upload_url;
-                            uploadManager.scheduleJob(scope.files[index]);
-                        })
-                        .error(function (error) {
-                            scope.$emit('notification', error.response.message);
-                        });
+                  $http.get(appSettings.apiEndpoint + '/resources/' + id + '/request-upload-url')
+                    .success(function (data) {
+                        scope.files[index].id = id;
+                        scope.files[index].token = data.content_upload_url;
+                        uploadManager.scheduleJob(scope.files[index]);
+                    })
+                    .error(function (error) {
+                      scope.$emit('notification', {type: 'error', message: error.response.message});
+                    });
                 };
             }
         };

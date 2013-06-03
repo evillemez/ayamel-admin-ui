@@ -9,6 +9,7 @@ angular.module('ayamelAdminApp')
     $scope.resource = null;
 
     $scope.categories = resourceSettings.categories;
+    $scope.resourceTypes = resourceSettings.types;
 
     //get the resource on load
     $http.get(appSettings.apiEndpoint + '/resources/' + $routeParams.resourceId).success(function(data, status, headers, config) {

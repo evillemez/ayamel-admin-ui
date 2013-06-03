@@ -1,3 +1,13 @@
-<div ng-controller='CreateCtrl'>
-  <div id="dropZone" drop-zone></div>
+<div>
+  <tabs>
+    <pane heading='From Files'>
+      <div ng-include src="'views/create-files.html'"></div>
+    </pane>
+    <pane heading='From YouTube'>
+      <div ng-include src="'views/create-uri.html'"></div>
+    </pane>
+    <pane heading='From Uri'>
+      <div ng-include src="'views/create-uri.html'"></div>
+    </pane>
+  </tabs>
 </div>

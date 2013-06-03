@@ -10,7 +10,7 @@
       <div class='control-group'>
         <label class='control-label' for='type'>Type</label>
         <div class='controls'>
-          <input type='text' id='type' ng-model='resource.type'>
+          <select id='type{{fileIndex}}' ng-model='file.type' ng-options='type for type in resourceTypes'></select>
         </div>
       </div>
       <div class='control-group'>
