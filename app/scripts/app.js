@@ -24,13 +24,17 @@ var settings = {
         value: 'awaiting_content'
       },
       {
-        name: 'Finished Uploading',
-        value: 'finished_uploading'
+        name: 'Normal',
+        value: 'normal'
+      },
+      {
+        name: 'Processing',
+        value: 'processing'
       }
     ]
   },
   relation: {
-    types: ['part_of', 'depends_on', 'requires', 'search_include']
+    types: ['part_of', 'based_on', 'requires', 'search', '']
   },
   file: {}
 };
@@ -67,6 +71,23 @@ angular.module('ayamelAdminApp', ['ui.bootstrap', 'ngResource'])
       .otherwise({
         redirectTo: '/'
       });
+  })
+  .factory('apiUrlBuilder', function(appSettings) {
+    return {
+      createUrl: function (route, filters) {
+        var url = appSettings.apiEndpoint;
+        
+        var query = [];
+        for (var filter in filters) {
+          query.push(filters[filter] + '=' + filter);
+        }
+        //always append api key
+        query.push('_key=' + appSettings.apiKey);
+        
+        var queryString = query.join('&');        
+        return url + route + '?' + queryString;
+      }
+    };
   })
   .run(function($rootScope, appSettings) {
     $rootScope.settings = {

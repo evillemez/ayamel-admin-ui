@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('ayamelAdminApp')
-  .controller('BrowseCtrl', function ($scope, $http, appSettings, resourceSettings, $location) {
+  .controller('BrowseCtrl', function ($scope, $http, appSettings, resourceSettings, $location, apiUrlBuilder) {
     if (!$scope.settings.apiKey) {
       $location.url('/');
     }
@@ -18,7 +18,7 @@ angular.module('ayamelAdminApp')
 
     //get the resources on load
     $scope.requestResources = function () {
-      $http.get(appSettings.apiEndpoint + '/resources?_key=' + appSettings.apiKey).success(function (data, status, headers, config) {
+      $http.get(apiUrlBuilder.createUrl('/resources')).success(function (data, status, headers, config) {
         $scope.resources = data.resources;
       }).error(function (data, status, headers, config) {
         $scope.$emit('notification', { type: 'error', message: "(" + status + ") Could not get resources." });
@@ -51,7 +51,7 @@ angular.module('ayamelAdminApp')
 
     $scope.deleteResource = function (id) {
       // Need to fix url
-      $http.delete(appSettings.apiEndpoint + '/resources/' + id).success(function (data, status, headers, config) {
+      $http.delete(apiUrlBuilder.createUrl('/resources/'+id)).success(function (data, status, headers, config) {
         // Refresh resources
         $scope.requestResources();
       }).error(function (data, status, headers, config) {

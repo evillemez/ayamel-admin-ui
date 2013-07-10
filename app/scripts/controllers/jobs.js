@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('ayamelAdminApp')
-  .controller('JobsCtrl', function ($scope, uploadManager) {
+  .controller('JobsCtrl', function ($scope, uploadManager, apiUrlBuilder) {
 
     uploadManager.setScope($scope);
 

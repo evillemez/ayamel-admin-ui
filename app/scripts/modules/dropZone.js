@@ -1,5 +1,5 @@
 angular.module('ayamelAdminApp')
-    .directive('dropZone', function ($http, uploadManager, appSettings, resourceSettings) {
+    .directive('dropZone', function ($http, uploadManager, appSettings, resourceSettings, apiUrlBuilder) {
         var dropZone = {
             restrict: 'A',
             templateUrl: 'views/dropZone.html',
@@ -66,7 +66,7 @@ angular.module('ayamelAdminApp')
                     data.origin.note = scope.files[index].origin.note;
                     data.origin.uri = scope.files[index].origin.uri;
 
-                    $http.post(appSettings.apiEndpoint + '/resources', data)
+                    $http.post(apiUrlBuilder.createUrl('/resources'), data)
                         .success(function (dataReceived) {
                             scope.requestUploadUrl(index, dataReceived.resource.id);
                         })
@@ -76,7 +76,7 @@ angular.module('ayamelAdminApp')
                 };
 
                 scope.requestUploadUrl = function (index, id) {
-                  $http.get(appSettings.apiEndpoint + '/resources/' + id + '/request-upload-url')
+                  $http.get(apiUrlBuilder.createUrl('/resources/' + id + '/request-upload-url'))
                     .success(function (data) {
                         scope.files[index].id = id;
                         scope.files[index].token = data.content_upload_url;
@@ -90,4 +90,5 @@ angular.module('ayamelAdminApp')
         };
 
         return dropZone;
-    });
+    })
+;
