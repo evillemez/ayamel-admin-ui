@@ -3,9 +3,9 @@
 //general settings for app behavior
 var settings = {
   app: {
-    apiEndpoint: 'http://ayamel.americancouncils.org/api/v1',
+    apiEndpoint: 'http://staging.ayamel.org/api/v1',
     notificationTimeout: 3000,
-    apiKey: '2hsd834hdf'
+    apiKey: '45678isafgd56789asfgdhf4567'
   },
   uploadManager: {
     maxFileSize: 200000000,  //~200MB
